@@ -1,0 +1,56 @@
+{% extends 'base/base.html' %}
+
+
+
+{% block main %}
+
+<div class="home-container container">
+    <div class="row">
+        <div class="col-3">
+            <h3>Browse Topics</h3>
+            <hr>
+
+            <a href="{% url 'home' %}">ALL</a>
+            {% for topic in topics %}
+                <div>
+                    <a href="{% url 'home' %}?q={{ topic.name }}">{{ topic.name }}</a>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="col-6">
+            <a href="{% url 'create-room' %}">create room</a>
+            <h5>{{ room_count }} avairable room </h5>
+            {% for room in rooms %}
+                <div>
+
+                    {% if request.user == room.host %}
+                        <a href="{% url 'update-room' room.id %}">編集</a> /
+                        <a href="{% url 'delete-room' room.id %}">削除</a>
+                    {% endif %}
+
+                    <p>@{{ room.host.username }}</p>
+                    <small>Topic: {{ room.topic.name }}</small>
+                    <p>{{ room.id }} / <a href="{% url 'room' room.id %}">{{ room.name }}</a></p>
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+
+        <div class="col-3">
+            <h3>Recentry activity</h3>
+            <hr>
+
+            {% for message in room_messages %}
+                <p>{{ message.user }}</p>
+                <p> {{ message.body }}</p>
+            {% endfor %}
+
+
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock main %}

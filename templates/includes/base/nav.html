@@ -1,0 +1,18 @@
+<nav class="navbar navbar-light bg-transparent nav-absolute">
+    <div class="container">
+        <a class="navbar-brand logo-font logo-text" href="/">Sports Fan website</a>
+
+        <form action="{% url 'home' %}" method="get">
+            <input type="text" name="q" placeholder="Search Rooms..."/>
+        </form>
+
+
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'logout' %}">Log out</a>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+
+
+    </div>
+</nav>
